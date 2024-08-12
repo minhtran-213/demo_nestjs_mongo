@@ -1,0 +1,65 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Post {
+  _id: ObjectId!
+  title: String!
+  content: String!
+  author: User!
+}
+
+type UserSettings {
+  receivesNotification: Boolean!
+  receivesSMS: Boolean!
+}
+
+type User {
+  _id: ObjectId
+  username: String!
+  displayName: String!
+  avatarUrl: String
+  email: String!
+  password: String!
+  settings: UserSettings!
+  posts: [Post!]!
+}
+
+"""Mongodb Object Id"""
+scalar ObjectId
+
+type Query {
+  getAllUsers: [User!]!
+  getUserById(id: ObjectId!): User
+  findAllPosts: [Post!]!
+}
+
+type Mutation {
+  createUser(request: CreateUserRequest!): User!
+  updateUser(id: ObjectId!, request: UpdateUserRequest!): User!
+  deleteUser(id: ObjectId!): User
+  createPostForUser(request: PostRequest!): Post!
+}
+
+input CreateUserRequest {
+  username: String!
+  displayName: String
+  email: String!
+  password: String!
+  userSettingsRequest: UserSettingsRequest!
+}
+
+input UserSettingsRequest {
+  receivesNotification: Boolean
+  receivesSMS: Boolean
+}
+
+input UpdateUserRequest {
+  displayName: String
+  email: String
+}
+
+input PostRequest {
+  title: String!
+  content: String!
+}
